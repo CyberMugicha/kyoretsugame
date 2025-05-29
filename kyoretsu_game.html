@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>スーパー銭湯強烈ゲーム</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #faa3a1;
+    }
+    #start-screen, #game-screen {
+      display: none;
+      padding: 2em;
+    }
+    #start-screen.active, #game-screen.active {
+      display: block;
+    }
+    #start-screen button {
+      font-size: 1.5em;
+      padding: 1em 2em;
+      margin-top: 2em;
+      cursor: pointer;
+    }
+    #slot-container {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-template-rows: repeat(2, 175px);
+      gap: 10px;
+      justify-content: center;
+      margin: 20px auto;
+    }
+    .slot {
+      width: 100px;
+      height: 175px;
+      border: 4px solid #ff69b4; /* 明るめのピンク色 */
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .slot1 { border-color: #004898; } /* 青 */
+    .slot2 { border-color: #493759; } /* 紫 */
+    .slot3 { border-color: #f6f7f8; } /* 白に近いグレー */
+    .slot4 { border-color: #328131; } /* 緑 */
+    .slot5 { border-color: #ece038; } /* 黄色 */
+    .slot6 { border-color: #e02c87; } /* ピンク */
+
+    .slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    #result {
+      font-size: 2em;
+      margin-top: 1em;
+      font-weight: bold;
+      color: #333;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1.1em;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="start-screen" class="active">
+    <h1>スーパー銭湯強烈ゲーム</h1>
+    <button onclick="startGame()">ゲームスタート</button>
+  </div>
+
+<div id="game-screen">
+<div id="slot-container">
+  <!-- 6マスの画像スロット -->
+  <div class="slot slot1"><img src="img/ofuro_sentou_man.png" alt=""></div>
+  <div class="slot slot2"><img src="img/ofuro_sentou_man.png" alt=""></div>
+  <div class="slot slot3"><img src="img/ofuro_sentou_man.png" alt=""></div>
+  <div class="slot slot4"><img src="img/ofuro_sentou_man.png" alt=""></div>
+  <div class="slot slot5"><img src="img/ofuro_sentou_man.png" alt=""></div>
+  <div class="slot slot6"><img src="img/ofuro_sentou_man.png" alt=""></div>
+</div>
+
+<button onclick="spin()">回す</button>
+<button id="restart-button" style="display:none;">スタートに戻る</button>
+<div id="message"></div>
+<div id="result"></div>
+
+<script>
+  const imagePaths = [
+    "img/ofuro_sentou_man.png",
+    "img/ofuro_sentou_man.png",
+    "img/ofuro_sentou_man.png",
+    "img/ofuro_sentou_man.png",
+    "img/ofuro_sentou_man.png",
+    "img/ofuro_sentou_man.png",
+    "img/ofuro_sentou_man.png",
+    "img/shopping_supermarket_man.png",
+    "img/shopping_supermarket_man.png",
+    "img/shopping_supermarket_man.png",
+  ];
+
+  const restartButton = document.getElementById("restart-button");
+  const message = document.getElementById("message");
+  const spinSound = new Audio("img/supersentou.mp3"); // 効果音ファイルを指定
+  const winSound = new Audio("img/kyoretsu_aisatsu.mp3");
+
+  function startGame() {
+      document.getElementById("start-screen").classList.remove("active");
+      document.getElementById("game-screen").classList.add("active");
+      restartButton.style.display = "none";
+      message.textContent = "";
+      document.getElementById("result").textContent = "";
+    }
+
+  function spin() {
+    restartButton.style.display = "none"; // ← これを追加して、毎回非表示からスタート
+    spinSound.play();
+
+    setTimeout(() => {
+      const slots = document.querySelectorAll('.slot img');
+      let currentImages = [];
+
+      slots.forEach((img) => {
+        const randomIndex = Math.floor(Math.random() * imagePaths.length);
+        const selectedImage = imagePaths[randomIndex];
+        img.src = selectedImage;
+        currentImages.push(selectedImage);
+      });
+
+      const allSame = currentImages.every(path => path === currentImages[0]);
+
+      if (allSame) {
+        document.getElementById("result").textContent = "強烈～";
+        setTimeout(() => {
+          winSound.play(); // 効果音を少し遅らせて再生
+        }, 500); // ← ここで500ms（0.5秒）遅らせている
+        restartButton.style.display = "inline-block";
+      } else {
+        document.getElementById("result").textContent = "もう一回！";
+      }
+    }, 2500); // 効果音が鳴ってからスロット回転まで少し待つ
+  }
+
+  restartButton.addEventListener("click", () => {
+    document.getElementById("game-screen").classList.remove("active");
+    document.getElementById("start-screen").classList.add("active");
+  });
+</script>
+
+</body>
+</html>
