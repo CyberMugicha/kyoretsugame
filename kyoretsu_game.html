@@ -6,80 +6,110 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      text-align: center;
-      font-family: sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #faa3a1;
-    }
-    #start-screen, #game-screen {
-      display: none;
-      padding: 2em;
-    }
-    #start-screen.active, #game-screen.active {
-      display: block;
-    }
-    #start-screen button {
-      font-size: 1.5em;
-      padding: 1em 2em;
-      margin-top: 2em;
-      cursor: pointer;
-    }
-    #slot-container {
-      display: grid;
-      grid-template-columns: repeat(3, 100px);
-      grid-template-rows: repeat(2, 175px);
-      gap: 10px;
-      justify-content: center;
-      margin: 20px auto;
-    }
-    .slot {
-      width: 100px;
-      height: 175px;
-      border: 4px solid #ff69b4; /* 明るめのピンク色 */
-      background: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .slot1 { border-color: #004898; } /* 青 */
-    .slot2 { border-color: #493759; } /* 紫 */
-    .slot3 { border-color: #f6f7f8; } /* 白に近いグレー */
-    .slot4 { border-color: #328131; } /* 緑 */
-    .slot5 { border-color: #ece038; } /* 黄色 */
-    .slot6 { border-color: #e02c87; } /* ピンク */
+  text-align: center;
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #faa3a1;
+}
 
-    .slot img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 10px;
-    }
-    #result {
-      font-size: 2em;
-      margin-top: 1em;
-      font-weight: bold;
-      color: #333;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 1.1em;
-      cursor: pointer;
-    }
-    @media (max-width: 600px) {
+#start-screen, #game-screen {
+  display: none;
+  padding: 1.5em;
+}
+
+#start-screen.active, #game-screen.active {
+  display: block;
+}
+
+h1 {
+  font-size: 7vw;
+  line-height: 1.2;
+  margin: 1em 0;
+}
+
+#slot-container {
+  display: grid;
+  grid-template-columns: repeat(3, 28vw);
+  grid-template-rows: repeat(2, 40vw);
+  gap: 2vw;
+  justify-content: center;
+  margin: 2vw auto;
+  max-width: 90vw;
+}
+
+.slot {
+  width: 28vw;
+  height: 40vw;
+  border: 3px solid #ff69b4;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.slot1 { border-color: #004898; }
+.slot2 { border-color: #493759; }
+.slot3 { border-color: #f6f7f8; }
+.slot4 { border-color: #328131; }
+.slot5 { border-color: #ece038; }
+.slot6 { border-color: #e02c87; }
+
+.slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+#result {
+  font-size: 6vw;
+  margin-top: 1em;
+  font-weight: bold;
+  color: #333;
+}
+
+#message {
+  font-size: 1em;
+  margin-top: 0.5em;
+  color: #444;
+}
+
+button {
+  margin: 1em 0.5em;
+  padding: 1em 2em;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #f0f0f0;
+}
+
+/* PC・タブレット向け */
+@media (min-width: 768px) {
   #slot-container {
-    grid-template-columns: repeat(3, 80px);
-    grid-template-rows: repeat(2, 140px);
-    gap: 6px;
+    grid-template-columns: repeat(3, 120px);
+    grid-template-rows: repeat(2, 180px);
+    gap: 12px;
   }
+
   .slot {
-    width: 80px;
-    height: 140px;
+    width: 120px;
+    height: 180px;
   }
-  button {
-    font-size: 1em;
-    padding: 8px 16px;
+
+  h1 {
+    font-size: 2.5em;
   }
+
   #result {
     font-size: 1.5em;
   }
